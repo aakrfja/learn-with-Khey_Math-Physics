@@ -24,3 +24,25 @@ function toggleLanguage() {
 function openPDF(filePath) {
     window.open(filePath, '_blank');
 }
+function showPopup() {
+    const searchBar = document.getElementById('search-bar');
+    const popup = document.getElementById('popup');
+    
+    if (searchBar.value.trim() === '') {
+        popup.classList.add('hidden'); // Hide popup if search bar is empty
+    } else {
+        popup.classList.remove('hidden'); // Show popup when there's text
+        // You can add logic to populate the popup with search results here
+    }
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('hidden');
+}
+document.getElementById("home").addEventListener("click", function(event) {
+    event.preventDefault();
+    document.getElementById("content").innerHTML = "<h1></h1><p></p>";
+    const menu = document.querySelector('.menu-content');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+});

@@ -175,3 +175,212 @@ header nav ul li #language-options button:hover {
 .hidden {
     display: none;
 }
+
+body {
+    font-family: "Khmer OS Bokor", Arial, sans-serif; /* Default font for Khmer text */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Menu styles */
+.menu {
+    position: fixed; /* Fix to the top left corner */
+    top: 0;
+    left: 0;
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border-bottom-right-radius: 10px; /* Rounded corner */
+    z-index: 1000; /* Ensure it's above other content */
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.menu nav {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px; /* Space between the icon and the menu */
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin: 5px 0;
+    font-family: "Comic Sans MS", sans-serif; /* Font for menu items */
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+h1 {
+    font-family: "Khmer OS Muol Light", Arial, sans-serif; /* Special font for specific title */
+}
+
+.title-section h1[data-kh] {
+    font-family: "Khmer OS Muol Light", Arial, sans-serif; /* Applying to the Khmer title */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Khmer OS Battambang", Arial, sans-serif; /* Font for the button text */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-item {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Search container */
+.search-container {
+    display: flex;
+    flex-direction: column; /* Stack search bar and popup */
+    align-items: center; /* Center horizontally */
+    margin-top: 20px; /* Space between the paragraph and search bar */
+    position: relative; /* Position relative to control the popup's position */
+}
+
+#search-bar {
+    width: 100%;
+    max-width: 400px; /* Maximum width of the search bar */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Comic Sans MS", sans-serif; /* Font for English text */
+}
+
+.popup {
+    position: absolute; /* Position on top of the search bar */
+    top: 100%; /* Place it directly below the search bar */
+    left: 0;
+    width: 100%;
+    max-width: 400px; /* Match the width of the search bar */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 10; /* Ensure it's above other content */
+    display: none; /* Hide by default */
+}
+
+.popup.hidden {
+    display: none;
+}
+
+.navbar {
+    background-color: #007ACC; /* Adjust the color to match the blue in your image */
+    overflow: hidden;
+    padding: 14px 20px;
+}
+
+.navbar .menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar .menu li {
+    margin-left: 20px;
+}
+
+.navbar .menu li a {
+    color: #ffffff; /* Adjust the color to match the purple in your image */
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar .menu li a:hover {
+    text-decoration: underline;
+    color: #FF4500;
+}
+
+
+#menu li a:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
+
+.menu-icon {
+    font-size: 24px;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+
+.menu-bar {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menu-content {
+    display: none;
+    background-color: #00BCD4;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.menu-content a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    position: relative;
+}
+
+.menu-content a:hover {
+    background-color: #0097A7;
+}
+
+.menu-content a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.menu-content a:hover::after {
+    width: 100%;
+}
