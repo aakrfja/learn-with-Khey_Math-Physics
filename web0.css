@@ -1,0 +1,425 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('IMG_3363.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    background-position: center; /* Centers the image */
+    color: #333;
+}
+
+header {
+    background-color: rgba(0, 150, 214, 0.9); /* Slight transparency for the header background */
+    color: white;
+    padding: 1em 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header .logo img {
+    height: 50px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    position: relative;
+}
+
+header nav ul li {
+    margin: 0;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+header nav ul li #language-options {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header nav ul li #language-options button {
+    background: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+header nav ul li #language-options button:hover {
+    background-color: #f0f0f0;
+}
+
+.title-section {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency for the title section background */
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.title-section h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.title-section p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+
+.image-section {
+    text-align: center;
+    margin: 20px;
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+body {
+    font-family: "Khmer OS Bokor", Arial, sans-serif; /* Default font for Khmer text */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Menu styles */
+.menu {
+    position: fixed; /* Fix to the top left corner */
+    top: 0;
+    left: 0;
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border-bottom-right-radius: 10px; /* Rounded corner */
+    z-index: 1000; /* Ensure it's above other content */
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.menu nav {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px; /* Space between the icon and the menu */
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin: 5px 0;
+    font-family: "Comic Sans MS", sans-serif; /* Font for menu items */
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+h1 {
+    font-family: "Khmer OS Muol Light", Arial, sans-serif; /* Special font for specific title */
+}
+
+.title-section h1[data-kh] {
+    font-family: "Khmer OS Muol Light", Arial, sans-serif; /* Applying to the Khmer title */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Khmer OS Battambang", Arial, sans-serif; /* Font for the button text */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-item {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+}
+
+
+/* Search container */
+.search-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center;     /* Center items vertically */
+    width: 100%;              /* Full width of the screen */
+    padding: 10px;
+    box-sizing: border-box;  /* Include padding and border in the element's total width and height */
+}
+
+.search-bar {
+    font-family: 'Khmer OS Battambang', sans-serif;
+    width: 100%;              /* Full width of its container */
+    max-width: 600px;         /* Maximum width */
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;  /* Include padding and border in the element's total width */
+}
+
+
+.search-button {
+    background-color: #a0ced1;
+    color: blue;
+    border: none;
+    padding: 11.5px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    transition: background-color 0.3s ease;
+}
+
+.search-container input[type="text"]:focus {
+    outline: 2px solid #a0ced1; /* Keeps the outline black when focused */
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    width: 100%;
+    font-size: 16px;
+    color: #666;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+
+.search-button:hover {
+    background-color: #eb27ba;
+    color: rgb(255, 255, 255);
+}
+
+.search-results {
+    margin-top: 20px;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center the text inside the results */
+    max-width: 600px; /* Adjust the width as needed */
+    margin: 20px auto; /* Center the results container */
+}
+
+
+.navbar {
+    background-color: #007ACC; /* Adjust the color to match the blue in your image */
+    overflow: hidden;
+    padding: 14px 20px;
+}
+
+.navbar .menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar .menu li {
+    margin-left: 20px;
+}
+
+.navbar .menu li a {
+    color: #ffffff; /* Adjust the color to match the purple in your image */
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar .menu li a:hover {
+    text-decoration: underline;
+    color: #FF4500;
+}
+
+
+#menu li a:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
+
+.menu-icon {
+    font-size: 14px;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+
+.menu-bar {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menu-content {
+    display: none;
+    background-color: #00BCD4;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.menu-content a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    position: relative;
+}
+
+.menu-content a:hover {
+    background-color: #0097A7;
+}
+
+.menu-content a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.menu-content a:hover::after {
+    width: 100%;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ensures consistent column width */
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    justify-items: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+}
+
+.centered-link a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px; /* Fixed width for all links */
+    height: 150px; /* Fixed height for all links */
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Specific background colors for each link */
+#openLink1 {
+    background-color: #df9090; /* Light Red */
+    /*border: 2px solid #dd8282;*/
+}
+#openLink1:hover {
+    background-color: rgb(248, 110, 110); /* Darker Red on hover */
+    border: 2px solid rgb(226, 88, 88);
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+
+#openLink2 {
+    background-color: #3498db; /* Blue */
+    /*border: 2px solid #278fd4;*/
+}
+#openLink2:hover {
+    background-color: #1173b4; /* Darker Red on hover */
+    border: 2px solid #0562a0;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+
+#openLink3 {
+    background-color: #2ecc71; /* Green */
+    /*border: 2px solid #1ac963;*/
+}
+#openLink3:hover {
+    background-color: #0ca54c; /* Darker Red on hover */
+    border: 2px solid #079140;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+#openLink4 {
+    background-color: #f1c40f; /* Yellow */
+    /*border: 2px solid #ddb30c;*/
+}
+#openLink4:hover {
+    background-color: #d4ab03; /* Darker Red on hover */
+    border: 2px solid #af8d03;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.centered-link a:hover {
+    opacity: 0.8; /* Slight transparency on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
