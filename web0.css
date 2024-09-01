@@ -256,91 +256,65 @@ button:hover {
 }
 
 
+
+/* Style for the navbar */
 .navbar {
     background-color: #007ACC; /* Adjust the color to match the blue in your image */
     overflow: hidden;
     padding: 14px 20px;
+    position: relative; /* Position relative for correct positioning of the menu */
 }
 
-.navbar .menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.navbar .menu li {
-    margin-left: 20px;
-}
-
-.navbar .menu li a {
-    color: #ffffff; /* Adjust the color to match the purple in your image */
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.navbar .menu li a:hover {
-    text-decoration: underline;
-    color: #FF4500;
-}
-
-
-#menu li a:hover {
-    color: rgb(255, 255, 255);
-    text-decoration: underline;
-}
-
+/* Style for the menu icon */
 .menu-icon {
-    font-size: 14px;
-    display: inline-block;
-    color: rgb(255, 255, 255);
+    font-size: 18px;
+    color: #ffffff;
     cursor: pointer;
 }
 
+/* Style for the menu */
+#menu {
+    display: none;
+    position: absolute;
+    top: 100px; /* Adjust based on your header height */
+    right: 20px; /* Position to the right */
+    background-color: #00BCD4; /* Background color for the menu */
+    padding: 10px;
+    width: 300px; /* Adjust the width to make the menu smaller */
+    z-index: 1000;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add a shadow for better visibility */
+    border-radius: 8px; /* Rounded corners for the menu */
+}
 
+/* Style for the menu items */
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    margin: 10px 0;
+}
+
+#menu ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block; /* Make links take full width */
+}
+
+#menu ul li a:hover {
+    background-color: #0097A7;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Style for the menu bar icon */
 .menu-bar {
     font-size: 24px;
     cursor: pointer;
     display: inline-block;
-}
-
-.menu-content {
-    display: none;
-    background-color: #00BCD4;
-    padding: 10px;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-}
-
-.menu-content a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px 0;
-    position: relative;
-}
-
-.menu-content a:hover {
-    background-color: #0097A7;
-}
-
-.menu-content a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0%;
-    height: 2px;
-    background-color: white;
-    transition: width 0.3s ease;
-}
-
-.menu-content a:hover::after {
-    width: 100%;
 }
 
 
@@ -422,4 +396,3 @@ button:hover {
     opacity: 0.8; /* Slight transparency on hover */
     transform: scale(1.05); /* Slightly increase size on hover */
 }
-
