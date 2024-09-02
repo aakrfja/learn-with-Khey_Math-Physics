@@ -10,14 +10,15 @@ body {
     color: #333;
 }
 
+
 header {
     background-color: rgba(0, 150, 214, 0.9); /* Slight transparency for the header background */
-    color: white;
+    color: rgb(255, 255, 255);
     padding: 1em 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 15px;
 }
 
 header .logo img {
@@ -29,6 +30,14 @@ header nav ul {
     display: flex;
     gap: 10px;
     position: relative;
+}
+
+header nav ul:hover{
+    
+    color: rgb(255, 255, 255);  
+    opacity: 0.8;
+    transform: scale(1.3);  
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 header nav ul li {
@@ -58,11 +67,16 @@ header nav ul li #language-options button {
     width: 100%;
     text-align: left;
     cursor: pointer;
+    
 }
 
 header nav ul li #language-options button:hover {
-    background-color: #f0f0f0;
+    
+    opacity: 0.8;
+    transform: scale(1.0);  
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 
 .title-section {
     text-align: center;
