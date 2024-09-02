@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+   
     margin: 0;
     padding: 0;
     background-image: url('IMG_3363.jpg'); /* Replace with your image path */
@@ -9,6 +9,28 @@ body {
     background-position: center; /* Centers the image */
     color: #333;
 }
+
+/* Base styles for Khmer language */
+html[lang="km"] {
+    font-family: 'Battambang', 'Koulen', 'Siemreap', 'Moul', 'Bokor', sans-serif;
+}
+
+/* Base styles for English language */
+html[lang="en"] {
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+}
+
+/* You can specify more specific selectors if needed */
+body[lang="km"] {
+    font-family: 'Battambang', 'Koulen', 'Siemreap', 'Moul', 'Bokor', sans-serif;
+}
+
+body[lang="en"] {
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+}
+
+
+
 
 header {
     background-color: rgba(0, 150, 214, 0.9); /* Slight transparency for the header background */
@@ -58,10 +80,15 @@ header nav ul li #language-options button {
     width: 100%;
     text-align: left;
     cursor: pointer;
+    
 }
 
 header nav ul li #language-options button:hover {
-    background-color: #f0f0f0;
+    background-color: #CAD4C5;  
+    color: rgb(0, 0, 0);  
+    opacity: 0.8;
+    transform: scale(1.0);  
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .title-section {
@@ -139,16 +166,21 @@ body {
 
 .menu a:hover {
     text-decoration: underline;
+    
 }
 
 .hidden {
     display: none;
 }
-
+.khmer-muol {
+    font-family: 'Khmer OS Muol Light', serif;
+}
 h1 {
     font-family: "Khmer OS Muol Light", Arial, sans-serif; /* Special font for specific title */
 }
-
+.khmer-muol {
+            font-family: 'Khmer OS Muol Light', serif;
+        }
 .title-section h1[data-kh] {
     font-family: "Khmer OS Muol Light", Arial, sans-serif; /* Applying to the Khmer title */
 }
@@ -166,6 +198,7 @@ button {
 
 button:hover {
     background-color: #0056b3;
+    
 }
 
 .grid-container {
@@ -191,6 +224,7 @@ button:hover {
     width: 100%;              /* Full width of the screen */
     padding: 10px;
     box-sizing: border-box;  /* Include padding and border in the element's total width and height */
+    
 }
 
 .search-bar {
@@ -202,6 +236,15 @@ button:hover {
     border: 2px solid black;
     border-radius: 5px;
     box-sizing: border-box;  /* Include padding and border in the element's total width */
+   
+}
+
+.search-input:hover {
+    background-color: #CAD4C5;  /* Change background color on hover */
+    color: rgb(0, 0, 0);  /* Change text color on hover */
+    opacity: 0.8;               /* Change opacity on hover */
+    transform: scale(1.0);     /* Slightly scale up the eសlement on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 
@@ -216,11 +259,18 @@ button:hover {
     border-bottom-right-radius: 10px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    transition: background-color 0.3s ease;
+    
+}
+.search-button:hover {
+    background-color: #eb27ba;
+    color: rgb(255, 255, 255);
+    opacity: 0.8;
+    transform: scale(1.03);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .search-container input[type="text"]:focus {
-    outline: 2px solid #a0ced1; /* Keeps the outline black when focused */
+    outline: 1px solid #a0ced1; /* Keeps the outline black when focused */
 }
 
 .search-input {
@@ -238,11 +288,6 @@ button:hover {
     color: #999;
 }
 
-
-.search-button:hover {
-    background-color: #eb27ba;
-    color: rgb(255, 255, 255);
-}
 
 .search-results {
     margin-top: 20px;
@@ -271,6 +316,13 @@ button:hover {
     color: #ffffff;
     cursor: pointer;
 }
+.menu-icon:hover{
+     
+    color: rgb(0, 0, 0);  
+    opacity: 0.8;
+    transform: scale(1.3);  
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
 /* Style for the menu */
 #menu {
@@ -292,9 +344,15 @@ button:hover {
     margin: 0;
     padding: 0;
 }
-
+#menu ul li:hover{
+    background-color: #CAD4C5;  
+    color: rgb(0, 0, 0);  
+    opacity: 0.8;
+    transform: scale(1.16);  
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 #menu ul li {
-    margin: 10px 0;
+    margin: 2px 0;
 }
 
 #menu ul li a {
@@ -308,6 +366,7 @@ button:hover {
     background-color: #0097A7;
     border-radius: 4px;
     padding: 5px;
+    
 }
 
 /* Style for the menu bar icon */
@@ -343,6 +402,7 @@ button:hover {
     color: rgb(0, 0, 0);
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    
 }
 
 /* Specific background colors for each link */

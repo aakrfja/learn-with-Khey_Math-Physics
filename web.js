@@ -75,3 +75,53 @@ document.getElementById('searchButton').addEventListener('click', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            function search() {
+                const query = searchInput.value.trim();
+                alert(`Searching for: ${query}`);
+                // Replace the alert with your actual search logic
+            }
+
+            searchInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent default action (e.g., form submission)
+                    search(); // Call the search function
+                }
+            });
+
+            searchButton.addEventListener('click', function() {
+                search(); // Call the search function
+            });
+        });
+
+function search() {
+    console.log("Search function called");
+    // Get the search query from the input field
+    const searchQuery = document.getElementById('searchInput').value.trim();
+    console.log("Search query:", searchQuery);
+
+    // Define a mapping between search terms and HTML files
+    const searchMappings = {
+            "លំហាត់": "Exercise_Grade_8.html",
+            "លំហាត់ថ្នាក់ទី៨": "Exercise_Grade_8.html",
+            "សៀវភៅពុម្ព": "Textbook_Grade_8.html",
+            "សៀវភៅពុម្ពថ្នាក់ទី៨": "Textbook_Grade_8.html",
+            "សៀវភៅណែនាំគ្រូ": "Teacher_Guide.html",
+            "កិច្ចការផ្ទះ": "Homework_Book_Grade_8.html",
+            "កិច្ចការផ្ទះថ្នាក់ទី៨": "Homework_Book_Grade_8.html"
+    };
+
+    // Check if the search query matches any keys in the mapping
+    if (searchMappings[searchQuery]) {
+        console.log("Redirecting to:", searchMappings[searchQuery]);
+        // Redirect to the corresponding HTML file
+        window.location.href = searchMappings[searchQuery];
+    } else {
+        console.log("No results found for:", searchQuery);
+        // If no match is found, show an alert
+        alert('សូមសរសេរប្រភេទសៀវភៅឱ្យបានត្រឹមត្រូវ ' + searchQuery);
+    }
+}
