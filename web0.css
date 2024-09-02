@@ -355,11 +355,11 @@ button:hover {
     background-color: #CAD4C5;  
     color: rgb(0, 0, 0);  
     opacity: 0.8;
-    transform: scale(1.16);  
+    transform: scale(1.05);  
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 #menu ul li {
-    margin: 2px 0;
+    margin: 10px 0;
 }
 
 #menu ul li a {
