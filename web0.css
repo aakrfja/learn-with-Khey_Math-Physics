@@ -459,6 +459,28 @@ button:hover {
     color: rgb(255, 255, 255);
 }
 
+#openLink5 {
+    background-color: #0ff187; /* Yellow */
+    /*border: 2px solid #ddb30c;*/
+}
+#openLink5:hover {
+    background-color: #11cc75; /* Darker Red on hover */
+    border: 2px solid #11cc75;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+#openLink6 {
+    background-color: #0ff1e6; /* Yellow */
+    /*border: 2px solid #ddb30c;*/
+}
+#openLink6:hover {
+    background-color: #11d8ce; /* Darker Red on hover */
+    border: 2px solid #11d8ce;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
 .centered-link a:hover {
     opacity: 0.8; /* Slight transparency on hover */
     transform: scale(1.05); /* Slightly increase size on hover */
