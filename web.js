@@ -1,4 +1,5 @@
 function toggleLanguage() {
+    
     const currentLanguage = document.documentElement.lang;
     const newLanguage = currentLanguage === 'en' ? 'kh' : 'en';
 
@@ -16,6 +17,9 @@ function toggleLanguage() {
 
     const languageToggleButton = document.getElementById('language-toggle');
     languageToggleButton.textContent = newLanguage === 'en' ? 'ភាសាខ្មែរ' : 'English';
+    updateTextContent(newLang);
+    
+
 }
 
 function openPDF(filePath) {
@@ -125,3 +129,18 @@ function search() {
         alert('សូមសរសេរប្រភេទសៀវភៅឱ្យបានត្រឹមត្រូវ ' + searchQuery);
     }
 }
+
+function updateTextContent(lang) {
+    const elements = document.querySelectorAll('[data-en], [data-kh]');
+    elements.forEach(el => {
+        const text = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-kh');
+        if (el.classList.contains('button-text')) {
+            el.textContent = text; // Update button text
+        } else {
+            el.textContent = text; // Update other text elements
+        }
+    });
+}
+
+// Initialize with the current language
+updateTextContent(document.documentElement.lang);
