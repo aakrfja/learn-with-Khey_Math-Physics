@@ -1,0 +1,63 @@
+body {
+    
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+    overflow: hidden; /* Prevents scrolling when the button moves */
+}
+
+.question {
+    font-size: 28px;
+    color: #e94d58;
+}
+
+.gif {
+    display: block;
+    margin: 20px auto;
+    width: 300px;
+    height: auto;
+}
+
+.btn-group {
+    
+    position: relative; /* Not required but keeps things organized */
+    margin-top: 20px;
+}
+
+button {
+    
+    padding: 10px 30px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 0 10px; /* Add margin between buttons */
+}
+
+.yes-btn {
+    margin-left: -100px;
+    background-color: #e94d58;
+    color: white;
+    border: 2px solid #e94d58;
+    border-radius: 20px;
+    padding: 8px 50px;
+    box-shadow: 4px 4px 8px rgba(53, 36, 23, 0.5);
+}
+
+.no-btn {
+    
+    background-color: white;
+    color: #e94d58;
+    border: 2px solid #e94d58;
+    border-radius: 20px;
+    padding: 8px 50px;
+    box-shadow: 4px 4px 8px rgba(53, 36, 23, 0.5);
+    position: absolute; /* This is required for the button to move */
+}
+
+button:hover {
+    transition: 1s;
+    opacity: 0.8;
+    scale: 1.05;
+}
