@@ -61,3 +61,64 @@ button:hover {
     opacity: 0.8;
     scale: 1.05;
 }
+
+
+footer {
+    background-color: #44fff6d8;
+    margin-top: 40px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.contact-info {
+    font-size: 16px;
+    color: #434ff8; /* Change this to your desired color */
+    display: flex;
+    align-items: center;
+}
+
+.contact-info i {
+    margin-left: 10px;
+}
+
+.social-icons {
+    
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    font-size: 24px;
+    color: #9e6351;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #000;
+    animation: bounces 2s infinite; /* Apply the bounce animation */
+}
+
+.copyright {
+    color: #db2882; /* Change this to your desired color */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.copyright i {
+    margin-right: 5px;
+}
+@keyframes bounces {
+    0%, 20%, 50%, 80% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
