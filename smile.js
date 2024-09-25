@@ -33,7 +33,7 @@ yesBtn.addEventListener("click", () => {
 noBtn.addEventListener("mouseover", () => {
     setTimeout(() => {
         moveNoButtonRandomly();
-    }, 500); // 500ms delay for movement
+    }, 0.005); // 500ms delay for movement
 });
 
 // Add event listener to move 'No' button when clicked
