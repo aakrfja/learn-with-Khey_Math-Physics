@@ -57,7 +57,7 @@ button {
 }
 
 button:hover {
-    transition: 1s;
+    
     opacity: 0.8;
     scale: 1.05;
 }
