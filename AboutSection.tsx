@@ -34,22 +34,22 @@ const AboutSection = () => {
 
   const timelineEvents = [
     {
-      year: "២០១៨",
+      year: "២០២០",
       title: "បញ្ចប់ការសិក្សាថ្នាក់បរិញ្ញាបត្រ",
       description: "បញ្ចប់ការសិក្សាថ្នាក់បរិញ្ញាបត្រផ្នែកវិទ្យាសាស្ត្រកុំព្យូទ័រ ជាមួយនឹងពិន្ទុប្រសើរបំផុត។"
     },
     {
-      year: "២០១៩",
+      year: "២០២៥",
       title: "ចាប់ផ្តើមការងារជា Front-end Developer",
       description: "ចាប់ផ្តើមអាជីពជា Front-end Developer ដោយប្រើប្រាស់ React និង Vue.js។"
     },
     {
-      year: "២០២១",
+      year: "២០២៦",
       title: "ក្លាយជា Full-stack Developer",
       description: "ពង្រីកជំនាញដល់ការអភិវឌ្ឍន៍ Full-stack ដោយប្រើប្រាស់ Node.js និង MongoDB។"
     },
     {
-      year: "២០២៣",
+      year: "២០២៤",
       title: "បង្កើតកម្មវិធីផ្ទាល់ខ្លួន",
       description: "បង្កើតកម្មវិធីផ្ទាល់ខ្លួនដែលមានអ្នកប្រើប្រាស់ជាង ១០,០០០ នាក់។"
     }
