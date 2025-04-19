@@ -1,0 +1,161 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@100;300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 39 100% 55%;  /* Khmer saffron */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 169 58% 39%; /* Khmer teal */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 43 74% 49%; /* Khmer gold */
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+    
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 39 100% 55%; /* Khmer saffron */
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 169 58% 39%; /* Khmer teal */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 43 74% 49%; /* Khmer gold */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-khmer;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium transition-all hover:opacity-90;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-6 relative inline-block;
+  }
+  
+  .section-title::after {
+    @apply content-[''] absolute left-0 -bottom-2 w-1/2 h-1 bg-primary rounded-full;
+  }
+  
+  .skills-card {
+    @apply bg-card p-6 rounded-lg shadow-md transition-all hover:shadow-xl;
+  }
+  
+  .project-card {
+    @apply bg-card rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+  
+  .blog-card {
+    @apply bg-card rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl;
+  }
+  
+  .contact-input {
+    @apply w-full p-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+  
+  .social-icon {
+    @apply w-10 h-10 rounded-full flex items-center justify-center text-foreground bg-muted transition-colors hover:bg-primary hover:text-primary-foreground;
+  }
+  
+  .stat-card {
+    @apply bg-card p-6 rounded-lg shadow-md text-center;
+  }
+  
+  .parallax-bg {
+    @apply fixed top-0 left-0 w-full h-full -z-10 bg-gradient-to-br from-background to-muted opacity-30;
+  }
+  
+  /* Custom angkor pattern background */
+  .angkor-pattern {
+    @apply bg-opacity-5 bg-[url('/angkor-pattern.svg')] bg-repeat;
+  }
+  
+  /* Scroll progress bar */
+  .scroll-progress {
+    @apply fixed top-0 left-0 h-1 bg-primary z-50;
+  }
+  
+  /* Animation classes */
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-10 transition-all duration-700;
+  }
+  
+  .animate-on-scroll.show {
+    @apply opacity-100 translate-y-0;
+  }
+}
