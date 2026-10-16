@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resistor Color Code Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Siemreap&display=swap');
+        body { font-family: 'Inter', 'Siemreap', sans-serif; }
+        .kh-font { font-family: 'Siemreap', sans-serif; }
+        
+        .resistor-3d-body {
+            background: radial-gradient(circle at 50% 30%, #bae6fd 0%, #38bdf8 35%, #0284c7 75%, #0369a1 100%);
+            border-radius: 60px / 36px;
+            box-shadow: inset 0 6px 10px rgba(255, 255, 255, 0.7), 
+                        inset 0 -8px 14px rgba(0, 0, 0, 0.5), 
+                        0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .lead-draggable {
+            cursor: grab;
+            touch-action: none;
+        }
+        .lead-draggable:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 min-h-screen text-slate-100 flex flex-col items-center justify-between p-2 md:p-4 overflow-y-auto select-none">
+
+    <header class="w-full max-w-7xl flex justify-between items-center my-2 gap-2 shrink-0">
+        <h1 id="appTitle" class="text-2xl md:text-3xl font-extrabold tracking-wider text-amber-300 drop-shadow-lg">
+            RESISTOR COLOR CODE
+        </h1>
+        <!-- Global Page Zoom & Language Controls -->
+        <div class="flex items-center gap-2">
+            <div class="bg-slate-900/80 p-1.5 rounded-xl flex gap-1.5 border border-slate-700 shadow-md items-center text-sm">
+                <button onclick="zoomPage(0.1)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-white font-bold" title="Zoom In"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                <button onclick="zoomPage(-0.1)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-white font-bold" title="Zoom Out"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                <button onclick="resetPageZoom()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-white font-bold" title="Reset Zoom"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <!-- Language Toggle -->
+            <div class="bg-slate-900/80 p-1 rounded-xl flex gap-1 border border-slate-700 shadow-md">
+                <button onclick="setLang('en')" id="langEnBtn" class="px-3.5 py-1.5 rounded-lg text-base font-black transition bg-amber-400 text-slate-950">EN</button>
+                <button onclick="setLang('km')" id="langKmBtn" class="px-3.5 py-1.5 rounded-lg text-base font-black transition text-slate-300 hover:text-white kh-font">ភាសាខ្មែរ</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="appZoomContainer" class="w-full max-w-7xl glass-panel rounded-2xl p-4 md:p-6 shadow-2xl flex flex-col justify-between my-auto transition-transform duration-100 origin-top">
+        
+        <!-- Controls & Results Bar -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-3 border-b border-white/10 pb-3">
+            <div class="flex items-center gap-3">
+                <span id="labelResistorType" class="font-black text-slate-100 text-lg md:text-xl">Resistor Type:</span>
+                <div class="bg-slate-900/80 p-1 rounded-xl flex gap-1 border border-slate-700">
+                    <button id="btn4Band" onclick="setBandCount(4)" class="px-4 py-2 rounded-lg text-base md:text-lg font-black transition bg-amber-400 text-slate-950 shadow">4-Band</button>
+                    <button id="btn5Band" onclick="setBandCount(5)" class="px-4 py-2 rounded-lg text-base md:text-lg font-black transition text-slate-300 hover:text-white">5-Band</button>
+                    <button id="btn6Band" onclick="setBandCount(6)" class="px-4 py-2 rounded-lg text-base md:text-lg font-black transition text-slate-300 hover:text-white">6-Band</button>
+                </div>
+            </div>
+            <div class="text-center sm:text-right bg-slate-900/70 px-5 py-2.5 rounded-xl border border-white/10 shadow-lg flex items-center gap-4">
+                <div>
+                    <div id="labelCalcRes" class="text-sm md:text-base uppercase tracking-wider text-amber-300 font-black">Calculated Resistance</div>
+                    <div id="resultDisplay" class="text-3xl md:text-5xl font-black text-white mt-0.5">35 kΩ <span class="text-xl md:text-3xl font-black text-emerald-400">±5%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="flex justify-between items-center mb-1 px-1">
+                <span id="labelResistorView" class="text-base md:text-lg font-black uppercase tracking-wider text-amber-300"><i class="fa-solid fa-microchip"></i> Resistor Visual View</span>
+                <div class="flex items-center gap-2">
+                    <button onclick="resetLeadsPosition()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded border border-slate-600 transition" id="btnResetLeads">
+                        <i class="fa-solid fa-arrows-to-line"></i> Reset Position
+                    </button>
+                    <div id="miniBadges" class="flex gap-2 flex-wrap justify-end"></div>
+                </div>
+            </div>
+            <div id="viewportContainer" class="relative w-full h-28 md:h-36 bg-slate-950/70 rounded-xl flex items-center justify-center p-2 shadow-inner border border-white/10 overflow-hidden">
+                <div class="relative w-full h-full flex items-center justify-center origin-center">
+                    
+                    <!-- Left Metallic Lead + Cap Group (Interactive Drag) -->
+                    <div id="leftLeadGroup" class="absolute flex items-center lead-draggable transition-transform duration-75 z-10" style="left: 5%; transform: translateX(0px);">
+                        <div class="w-36 md:w-56 h-3 bg-gradient-to-r from-slate-500 via-slate-200 to-slate-400 rounded-full shadow"></div>
+                        <div class="w-5 h-16 md:h-20 bg-gradient-to-r from-sky-300 to-sky-500 rounded-l-lg border-y border-sky-600 shadow-md -ml-1"></div>
+                    </div>
+
+                    <!-- Right Metallic Lead + Cap Group (Interactive Drag) -->
+                    <div id="rightLeadGroup" class="absolute flex items-center lead-draggable transition-transform duration-75 z-10" style="right: 5%; transform: translateX(0px);">
+                        <div class="w-5 h-16 md:h-20 bg-gradient-to-l from-sky-300 to-sky-500 rounded-r-lg border-y border-sky-600 shadow-md -mr-1"></div>
+                        <div class="w-36 md:w-56 h-3 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-500 rounded-full shadow"></div>
+                    </div>
+
+                    <!-- Resistor Bulbous Body -->
+                    <div id="resistorBody" class="relative w-64 md:w-96 h-16 md:h-20 resistor-3d-body flex items-center justify-center transition-all duration-300 border border-sky-400/40 z-20">
+                        <div class="absolute top-1 left-8 right-8 h-2 bg-white/50 rounded-full blur-[0.5px]"></div>
+                        <div class="absolute bottom-1 left-10 right-10 h-1.5 bg-black/40 rounded-full"></div>
+                        
+                        <div id="resistorBandsContainer" class="flex items-center justify-around w-full h-full px-12 relative z-30">
+                            <div id="renderBand1" class="w-4 h-full shadow-md transition-all rounded-sm"></div>
+                            <div id="renderBand2" class="w-4 h-full shadow-md transition-all rounded-sm"></div>
+                            <div id="renderBand3" class="w-4 h-full shadow-md transition-all rounded-sm"></div>
+                            <div id="renderBand4" class="w-4 h-full shadow-md transition-all rounded-sm"></div>
+                            <div id="renderBand5" class="w-4 h-full shadow-md transition-all rounded-sm"></div>
+                            <div id="renderBand6" class="w-4 h-full shadow-md transition-all rounded-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/85 rounded-xl p-3 md:p-4 border border-white/10 shadow-2xl relative">
+            <div id="columnsGrid" class="grid grid-cols-4 gap-2 md:gap-3 relative z-10 text-center">
+                <!-- Columns injected dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const colorData = {
+            black:  { name: { en: 'Black', km: 'ខ្មៅ' }, hex: '#000000', bg: 'bg-black text-white border-slate-700', ring: 'ring-slate-400 border-2', digit: 0, mult: 1, multLabel: 'x1' },
+            brown:  { name: { en: 'Brown', km: 'ត្នោត' }, hex: '#78350f', bg: 'bg-amber-900 text-white border-amber-700', ring: 'ring-amber-500 border-2', digit: 1, mult: 10, multLabel: 'x10<sup class="text-lg font-black ml-0.5">1</sup>', tol: 1, temp: 100 },
+            red:    { name: { en: 'Red', km: 'ក្រហម' }, hex: '#dc2626', bg: 'bg-red-600 text-white border-red-500', ring: 'ring-red-500 border-2', digit: 2, mult: 100, multLabel: 'x10<sup class="text-lg font-black ml-0.5">2</sup>', tol: 2, temp: 50 },
+            orange: { name: { en: 'Orange', km: 'ទឹកក្រូច' }, hex: '#ea580c', bg: 'bg-orange-600 text-white border-orange-500', ring: 'ring-orange-500 border-2', digit: 3, mult: 1000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">3</sup>', tol: 3, temp: 15 },
+            yellow: { name: { en: 'Yellow', km: 'លឿង' }, hex: '#facc15', bg: 'bg-yellow-400 text-slate-950 border-yellow-300', ring: 'ring-yellow-300 border-2', digit: 4, mult: 10000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">4</sup>', tol: 4, temp: 25 },
+            green:  { name: { en: 'Green', km: 'បៃតង' }, hex: '#16a34a', bg: 'bg-green-600 text-white border-green-500', ring: 'ring-green-400 border-2', digit: 5, mult: 100000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">5</sup>', tol: 0.5, temp: 20 },
+            blue:   { name: { en: 'Blue', km: 'ខៀវ' }, hex: '#2563eb', bg: 'bg-blue-600 text-white border-blue-500', ring: 'ring-blue-400 border-2', digit: 6, mult: 1000000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">6</sup>', tol: 0.25, temp: 10 },
+            violet: { name: { en: 'Violet', km: 'ស្វាយ' }, hex: '#9333ea', bg: 'bg-purple-600 text-white border-purple-500', ring: 'ring-purple-400 border-2', digit: 7, mult: 10000000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">7</sup>', tol: 0.1, temp: 5 },
+            grey:   { name: { en: 'Grey', km: 'ប្រផេះ' }, hex: '#64748b', bg: 'bg-slate-500 text-white border-slate-400', ring: 'ring-slate-300 border-2', digit: 8, mult: 100000000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">8</sup>', tol: 0.05, temp: 1 },
+            white:  { name: { en: 'White', km: 'ស' }, hex: '#ffffff', bg: 'bg-white text-slate-950 border-slate-300', ring: 'ring-white border-2', digit: 9, mult: 1000000000, multLabel: 'x10<sup class="text-lg font-black ml-0.5">9</sup>' },
+            gold:   { name: { en: 'Gold', km: 'មាស' }, hex: '#ca8a04', bg: 'bg-yellow-600 text-white border-yellow-500', ring: 'ring-yellow-500 border-2', mult: 0.1, multLabel: 'x10<sup class="text-lg font-black ml-0.5">-1</sup>', tol: 5 },
+            silver: { name: { en: 'Silver', km: 'ប្រាក់' }, hex: '#94a3b8', bg: 'bg-slate-300 text-slate-950 border-slate-200', ring: 'ring-slate-200 border-2', mult: 0.01, multLabel: 'x10<sup class="text-lg font-black ml-0.5">-2</sup>', tol: 10 }
+        };
+
+        const digitColors = ['black', 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'violet', 'grey', 'white'];
+        const masterColorsOrder = ['black', 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'violet', 'grey', 'white', 'gold', 'silver'];
+        
+        const tolMap = { brown: 1, red: 2, orange: 3, yellow: 4, green: 0.5, blue: 0.25, violet: 0.1, grey: 0.05, gold: 5, silver: 10 };
+        const tempMap = { brown: 100, red: 50, orange: 15, yellow: 25, blue: 10, violet: 5 };
+
+        let currentBandCount = 4;
+        let currentLang = 'en';
+        let pageScale = 1;
+        
+        let leftOffset = 0;
+        let rightOffset = 0;
+
+        let selectedState = {
+            band1: 'red',
+            band2: 'black',
+            band3: 'black',
+            band4: 'brown',
+            band5: 'gold',
+            band6: 'red'
+        };
+
+        const translations = {
+            en: {
+                title: "RESISTOR COLOR CODE",
+                type: "Resistor Type:",
+                calcRes: "Calculated Resistance",
+                viewTitle: "Resistor Visual View",
+                resetLeads: "Reset Position",
+                cols: {
+                    digit: ["1st Digit", "2nd Digit", "3rd Digit"],
+                    mult: "Multiplier",
+                    tol: "Tolerance",
+                    temp: "Temp Coeff."
+                }
+            },
+            km: {
+                title: "កូដពណ៌រេស៊ីស្តង់",
+                type: "ប្រភេទរេស៊ីស្តង់:",
+                calcRes: "ទំហំរេស៊ីស្តង់គណនារួច",
+                viewTitle: "រូបភាពរេស៊ីស្តង់",
+                resetLeads: "កំណត់ទីតាំងឡើងវិញ",
+                cols: {
+                    digit: ["លេខទី១", "លេខទី២", "លេខទី៣"],
+                    mult: "គុណ(មេគុណ)",
+                    tol: "ភាពខុសគ្នា(កម្រិតល្អៀង)",
+                    temp: "ភាពធន់សីតុណ្ហភាព"
+                }
+            }
+        };
+
+        function setupInteractiveLeads() {
+            const leftGroup = document.getElementById('leftLeadGroup');
+            const rightGroup = document.getElementById('rightLeadGroup');
+
+            let isDraggingLeft = false;
+            let isDraggingRight = false;
+            let startX = 0;
+            let initialLeft = 0;
+            let initialRight = 0;
+
+            // Left Lead Events
+            leftGroup.addEventListener('mousedown', (e) => {
+                isDraggingLeft = true;
+                startX = e.clientX;
+                initialLeft = leftOffset;
+            });
+
+            leftGroup.addEventListener('touchstart', (e) => {
+                isDraggingLeft = true;
+                startX = e.touches[0].clientX;
+                initialLeft = leftOffset;
+            });
+
+            // Right Lead Events
+            rightGroup.addEventListener('mousedown', (e) => {
+                isDraggingRight = true;
+                startX = e.clientX;
+                initialRight = rightOffset;
+            });
+
+            rightGroup.addEventListener('touchstart', (e) => {
+                isDraggingRight = true;
+                startX = e.touches[0].clientX;
+                initialRight = rightOffset;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isDraggingLeft) {
+                    const deltaX = (e.clientX - startX) / pageScale;
+                    leftOffset = Math.max(-20, Math.min(220, initialLeft + deltaX));
+                    leftGroup.style.transform = `translateX(${leftOffset}px)`;
+                }
+                if (isDraggingRight) {
+                    const deltaX = (e.clientX - startX) / pageScale;
+                    rightOffset = Math.min(20, Math.max(-220, initialRight + deltaX));
+                    rightGroup.style.transform = `translateX(${rightOffset}px)`;
+                }
+            });
+
+            window.addEventListener('touchmove', (e) => {
+                if (isDraggingLeft) {
+                    const deltaX = (e.touches[0].clientX - startX) / pageScale;
+                    leftOffset = Math.max(-20, Math.min(220, initialLeft + deltaX));
+                    leftGroup.style.transform = `translateX(${leftOffset}px)`;
+                }
+                if (isDraggingRight) {
+                    const deltaX = (e.touches[0].clientX - startX) / pageScale;
+                    rightOffset = Math.min(20, Math.max(-220, initialRight + deltaX));
+                    rightGroup.style.transform = `translateX(${rightOffset}px)`;
+                }
+            });
+
+            window.addEventListener('mouseup', () => { isDraggingLeft = false; isDraggingRight = false; });
+            window.addEventListener('touchend', () => { isDraggingLeft = false; isDraggingRight = false; });
+        }
+
+        function resetLeadsPosition() {
+            leftOffset = 0;
+            rightOffset = 0;
+            document.getElementById('leftLeadGroup').style.transform = `translateX(0px)`;
+            document.getElementById('rightLeadGroup').style.transform = `translateX(0px)`;
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.getElementById('langEnBtn').className = `px-3.5 py-1.5 rounded-lg text-base font-black transition ${lang === 'en' ? 'bg-amber-400 text-slate-950' : 'text-slate-300 hover:text-white'}`;
+            document.getElementById('langKmBtn').className = `px-3.5 py-1.5 rounded-lg text-base font-black transition kh-font ${lang === 'km' ? 'bg-amber-400 text-slate-950' : 'text-slate-300 hover:text-white'}`;
+            
+            const t = translations[lang];
+            document.getElementById('appTitle').innerText = t.title;
+            document.getElementById('labelResistorType').innerText = t.type;
+            document.getElementById('labelCalcRes').innerText = t.calcRes;
+            document.getElementById('labelResistorView').innerHTML = `<i class="fa-solid fa-microchip"></i> ${t.viewTitle}`;
+            document.getElementById('btnResetLeads').innerHTML = `<i class="fa-solid fa-arrows-to-line"></i> ${t.resetLeads}`;
+            
+            buildUI();
+            updateAll();
+        }
+
+        function zoomPage(amount) {
+            pageScale = Math.max(0.6, Math.min(2.0, pageScale + amount));
+            const container = document.getElementById('appZoomContainer');
+            container.style.transform = `scale(${pageScale})`;
+        }
+
+        function resetPageZoom() {
+            pageScale = 1;
+            const container = document.getElementById('appZoomContainer');
+            container.style.transform = `scale(1)`;
+        }
+
+        function setBandCount(count) {
+            currentBandCount = count;
+            ['4', '5', '6'].forEach(num => {
+                const btn = document.getElementById(`btn${num}Band`);
+                if (parseInt(num) === count) {
+                    btn.className = "px-4 py-2 rounded-lg text-base md:text-lg font-black transition bg-amber-400 text-slate-950 shadow";
+                } else {
+                    btn.className = "px-4 py-2 rounded-lg text-base md:text-lg font-black transition text-slate-300 hover:text-white";
+                }
+            });
+            buildUI();
+            updateAll();
+        }
+
+        function buildUI() {
+            const grid = document.getElementById('columnsGrid');
+            grid.innerHTML = '';
+            const t = translations[currentLang];
+
+            let columnsConfig = [];
+            if (currentBandCount === 4) {
+                columnsConfig = [
+                    { title: t.cols.digit[0], key: 'band1', type: 'digit' },
+                    { title: t.cols.digit[1], key: 'band2', type: 'digit' },
+                    { title: t.cols.mult, key: 'band4', type: 'mult' },
+                    { title: t.cols.tol, key: 'band5', type: 'tol' }
+                ];
+                grid.className = "grid grid-cols-4 gap-2.5 md:gap-3.5 relative z-10 text-center";
+            } else if (currentBandCount === 5) {
+                columnsConfig = [
+                    { title: t.cols.digit[0], key: 'band1', type: 'digit' },
+                    { title: t.cols.digit[1], key: 'band2', type: 'digit' },
+                    { title: t.cols.digit[2], key: 'band3', type: 'digit' },
+                    { title: t.cols.mult, key: 'band4', type: 'mult' },
+                    { title: t.cols.tol, key: 'band5', type: 'tol' }
+                ];
+                grid.className = "grid grid-cols-5 gap-2 md:gap-3 relative z-10 text-center";
+            } else {
+                columnsConfig = [
+                    { title: t.cols.digit[0], key: 'band1', type: 'digit' },
+                    { title: t.cols.digit[1], key: 'band2', type: 'digit' },
+                    { title: t.cols.digit[2], key: 'band3', type: 'digit' },
+                    { title: t.cols.mult, key: 'band4', type: 'mult' },
+                    { title: t.cols.tol, key: 'band5', type: 'tol' },
+                    { title: t.cols.temp, key: 'band6', type: 'temp' }
+                ];
+                grid.className = "grid grid-cols-6 gap-1.5 md:gap-2.5 relative z-10 text-center";
+            }
+
+            columnsConfig.forEach(col => {
+                const colDiv = document.createElement('div');
+                colDiv.className = "flex flex-col items-center";
+                
+                const header = document.createElement('span');
+                header.className = "text-base md:text-lg font-black text-slate-100 mb-2.5 uppercase tracking-wider";
+                header.innerText = col.title;
+                colDiv.appendChild(header);
+
+                const optsDiv = document.createElement('div');
+                optsDiv.className = "flex flex-col gap-2 w-full";
+
+                masterColorsOrder.forEach(mColor => {
+                    let entry = null;
+                    if (col.type === 'digit') {
+                        if (digitColors.includes(mColor)) entry = { cKey: mColor, type: 'digit' };
+                    } else if (col.type === 'mult') {
+                        entry = { cKey: mColor, type: 'mult' };
+                    } else if (col.type === 'tol') {
+                        if (tolMap[mColor] !== undefined) entry = { cKey: mColor, type: 'tol' };
+                    } else if (col.type === 'temp') {
+                        if (tempMap[mColor] !== undefined) entry = { cKey: mColor, type: 'temp' };
+                    }
+
+                    if (!entry) {
+                        const spacer = document.createElement('div');
+                        spacer.className = "w-full py-3 px-3 rounded-full opacity-0 pointer-events-none";
+                        spacer.innerHTML = `<span class="opacity-0 text-base">.</span>`;
+                        optsDiv.appendChild(spacer);
+                        return;
+                    }
+
+                    const cKey = entry.cKey;
+                    const item = colorData[cKey];
+                    const btn = document.createElement('button');
+                    const isSelected = selectedState[col.key] === cKey;
+                    
+                    let activeRingClass = isSelected ? `ring-4 ${item.ring} scale-[1.03] z-20 shadow-xl` : 'opacity-85 hover:opacity-100 border border-white/20';
+                    
+                    btn.className = `w-full py-3 px-3 rounded-full font-black text-base md:text-lg transition flex items-center justify-center gap-2.5 ${item.bg} ${activeRingClass} shadow-md`;
+                    
+                    let labelText = '';
+                    if (entry.type === 'digit') labelText = `${item.digit} (${item.name[currentLang]})`;
+                    else if (entry.type === 'mult') labelText = item.multLabel;
+                    else if (entry.type === 'tol') labelText = `±${item.tol}%`;
+                    else if (entry.type === 'temp') labelText = `${item.temp}ppm`;
+
+                    btn.innerHTML = `<span class="w-4 h-4 rounded-full border border-black/30 shadow-inner shrink-0" style="background-color: ${item.hex}"></span> <span class="truncate">${labelText}</span>`;
+                    btn.onclick = () => {
+                        selectedState[col.key] = cKey;
+                        buildUI();
+                        updateAll();
+                    };
+                    optsDiv.appendChild(btn);
+                });
+
+                colDiv.appendChild(optsDiv);
+                grid.appendChild(colDiv);
+            });
+        }
+
+        function formatResistance(ohms) {
+            if (ohms >= 1000000000) return (ohms / 1000000000) + ' GΩ';
+            if (ohms >= 1000000) return (ohms / 1000000) + ' MΩ';
+            if (ohms >= 1000) return (ohms / 1000) + ' kΩ';
+            return ohms + ' Ω';
+        }
+
+        function updateAll() {
+            const b1 = colorData[selectedState.band1];
+            const b2 = colorData[selectedState.band2];
+            const b3 = colorData[selectedState.band3];
+            const mult = colorData[selectedState.band4];
+            const tol = colorData[selectedState.band5];
+            const temp = colorData[selectedState.band6];
+
+            const r1 = document.getElementById('renderBand1');
+            const r2 = document.getElementById('renderBand2');
+            const r3 = document.getElementById('renderBand3');
+            const r4 = document.getElementById('renderBand4');
+            const r5 = document.getElementById('renderBand5');
+            const r6 = document.getElementById('renderBand6');
+
+            if(r1) r1.style.backgroundColor = b1.hex;
+            if(r2) r2.style.backgroundColor = b2.hex;
+            if(r4) r4.style.backgroundColor = mult.hex;
+            if(r5) r5.style.backgroundColor = tol.hex;
+
+            if (currentBandCount === 4) {
+                if(r3) r3.style.display = 'none';
+                if(r6) r6.style.display = 'none';
+            } else if (currentBandCount === 5) {
+                if(r3) { r3.style.backgroundColor = b3.hex; r3.style.display = 'block'; }
+                if(r6) r6.style.display = 'none';
+            } else if (currentBandCount === 6) {
+                if(r3) { r3.style.backgroundColor = b3.hex; r3.style.display = 'block'; }
+                if(r6) { r6.style.backgroundColor = temp.hex; r6.style.display = 'block'; }
+            }
+
+            let baseVal = 0;
+            if (currentBandCount === 4) {
+                baseVal = parseInt(`${b1.digit}${b2.digit}`, 10);
+            } else {
+                baseVal = parseInt(`${b1.digit}${b2.digit}${b3.digit}`, 10);
+            }
+            let finalRes = baseVal * mult.mult;
+
+            let resHtml = `${formatResistance(finalRes)} <span class="text-xl md:text-3xl font-black text-emerald-400">±${tol.tol}%</span>`;
+            if (currentBandCount === 6 && temp && temp.temp) {
+                resHtml += ` <span class="text-base md:text-lg font-bold text-amber-300">(${temp.temp}ppm/°C)</span>`;
+            }
+            document.getElementById('resultDisplay').innerHTML = resHtml;
+
+            const badgesContainer = document.getElementById('miniBadges');
+            badgesContainer.innerHTML = `
+                <span class="px-2.5 py-1 rounded-md text-sm font-black text-white shadow" style="background:${b1.hex}">${b1.digit}</span>
+                <span class="px-2.5 py-1 rounded-md text-sm font-black text-white shadow" style="background:${b2.hex}">${b2.digit}</span>
+                ${currentBandCount >= 5 ? `<span class="px-2.5 py-1 rounded-md text-sm font-black text-white shadow" style="background:${b3.hex}">${b3.digit}</span>` : ''}
+                <span class="px-2.5 py-1 rounded-md text-sm font-black text-white shadow" style="background:${mult.hex}">${mult.multLabel.replace(/<[^>]*>?/gm, '')}</span>
+                <span class="px-2.5 py-1 rounded-md text-sm font-black text-slate-950 shadow" style="background:${tol.hex}">±${tol.tol}%</span>
+                ${currentBandCount === 6 ? `<span class="px-2.5 py-1 rounded-md text-sm font-black text-white shadow" style="background:${temp.hex}">${temp.temp}ppm</span>` : ''}
+            `;
+        }
+
+        window.onload = () => {
+            setBandCount(4);
+            setupInteractiveLeads();
+        };
+    </script>
+</body>
+</html>
